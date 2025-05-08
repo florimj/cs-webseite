@@ -1,16 +1,19 @@
-<main className="main-content">
-<img src="/illustration-startup.svg" alt="Startup Illustration" className="landing-image" />
-  <section>
-    <h2>Willkommen!</h2>
-    <p>
-      Erkunde unser interaktives Modell zur Governance von Corporate Startups.
-      Lerne mehr über Mechanismen, Strukturen und Entscheidungsprozesse.
-    </p>
-    <button className="start-button" onClick={() => onNavigate('dashboard')}>
-      Jetzt starten
-    </button>
-  </section>
-</main>
+import React from 'react';
 
+function Main({ onNavigate }) {
+  return (
+    <main className="main-content">
+      <section>
+        <h2>Seite in Arbeit</h2>
+        <p>
+          Funktion wird freigeschaltet
+        </p>
+        <button className="start-button" onClick={() => onNavigate('landing')}>
+          Zurück
+        </button>
+      </section>
+    </main>
+  );
+}
 
 export default Main;
