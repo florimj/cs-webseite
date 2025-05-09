@@ -4,11 +4,11 @@ import { FaHome, FaSitemap, FaTree, FaInfoCircle, FaEnvelope } from 'react-icons
 function Header({ onNavigate }) {
   return (
     <header className="main-header">
-      <h1>Corporate Startup Governance Modell</h1>
+      <h1>Corporate Startup Governance Model</h1>
       <nav>
         <button onClick={() => onNavigate('landing')}><FaHome /> Home</button>
         <button onClick={() => onNavigate('dashboard')}><FaSitemap /> Dashboard</button>
-        <button onClick={() => onNavigate('baum')}><FaTree /> Entscheidungsbaum</button>
+        <button onClick={() => onNavigate('baum')}><FaTree /> Strategy Decision Tree</button>
         <button onClick={() => onNavigate('about')}><FaInfoCircle /> About Us</button>
         <button onClick={() => onNavigate('contact')}><FaEnvelope /> Contact</button>
       </nav>

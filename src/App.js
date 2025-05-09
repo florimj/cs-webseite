@@ -2,7 +2,8 @@ import { useState } from 'react';
 import LandingPage from './components/LandingPage';
 import Footer from './components/footer';
 import Header from './components/header';
-import Main from './components/main_empty';
+import Dashboard from './components/Dashboard';
+import Mindmap from './components/Mindmap';
 
 function App() {
   const [view, setView] = useState('landing');
@@ -13,9 +14,9 @@ function App() {
 
     <main className="main-content">
       {view === 'landing' && <LandingPage onNavigate={setView} />}
-      {view === 'dashboard' && <Main onNavigate={setView} />}
-      {view === 'main' && <Main />}
-      {/* weitere Komponenten kommen später */}
+      {view === 'dashboard' && <Dashboard onNavigate={setView} />}
+      {view === 'mindmap' && <Mindmap onNavigate={setView} />}
+      {/* weitere Komponenten */}
     </main>
 
     <Footer />

@@ -5,13 +5,14 @@ function LandingPage({ onNavigate }) {
       <main className="main-content">
       <img src="/illustration-startup.svg" alt="Startup Illustration" className="landing-image" />
         <section>
-          <h2>Willkommen!</h2>
+          <h2>Welcome!</h2>
           <p>
-            Erkunde unser interaktives Modell zur Governance von Corporate Startups.
-            Lerne mehr über Mechanismen, Strukturen und Entscheidungsprozesse.
+            Explore our interactive model for the governance of corporate start-ups.
+            <hr></hr>
+            Learn more about mechanisms, structures and decision-making processes.
           </p>
           <button className="start-button" onClick={() => onNavigate('dashboard')}>
-            Jetzt starten
+            Start Now!
           </button>
         </section>
       </main>
