@@ -38,8 +38,11 @@ img {
 
 /* === Header & Navigation === */
 .main-header {
-  padding: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   background: linear-gradient(90deg, #6a1b9a, #ab47bc);
+  padding: 20px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -151,13 +154,13 @@ button:hover {
   border-radius: 10px;
   padding: 2rem 3rem;
   margin: 2rem auto;
-  width: 100%;
+  width: 70%;
   max-width: 1400px;
+  min-width: 300px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   text-align: justify;
   line-height: 1.6;
   box-sizing: border-box;
-  border: 1px solid rgb(166, 7, 166);
 }
 
 .main-content {
