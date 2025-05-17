@@ -8,6 +8,7 @@ function Header({ onNavigate }) {
       <nav>
         <button onClick={() => onNavigate('landing')}><FaHome /> Home</button>
         <button onClick={() => onNavigate('dashboard')}><FaSitemap /> Dashboard</button>
+        <button onClick={() => onNavigate('mindmap')}>Mindmap </button>
         <button onClick={() => onNavigate('baum')}><FaTree /> Strategy Decision Tree</button>
         <button onClick={() => onNavigate('about')}><FaInfoCircle /> About Us</button>
         <button onClick={() => onNavigate('contact')}><FaEnvelope /> Contact</button>
