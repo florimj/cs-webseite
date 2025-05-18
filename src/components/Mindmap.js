@@ -40,11 +40,6 @@ const rawData = {
       { id: '19', label: 'Values & Culture', children: [] },
 
     { id: '5', label: 'Autonomy', children: [] },
-      { id: '', label: '', children: [] },
-      { id: '', label: '', children: [] },
-      { id: '', label: '', children: [] },
-      { id: '', label: '', children: [] },
-      { id: '', label: '', children: [] },
 
   ],
     parentMap: {
@@ -78,10 +73,16 @@ export default function Mindmap() {
   const layout = useCallback(() => {
     const focusNode = rawData.nodes.find((n) => n.id === focusId);
     const childIds = focusNode?.children || [];
-    const children = childIds.map((id) => rawData.nodes.find((n) => n.id === id)).filter(Boolean);
+    const children = childIds
+      .map((id) => rawData.nodes.find((n) => n.id === id))
+      .filter((n) => n && n.id && n.label);
 
+    // gleichmäßige Verteilung im Kreis
     const angleStep = (2 * Math.PI) / Math.max(children.length, 1);
-    const radius = 150;
+
+    // Automatisch Radius erhöhen je mehr Kinder es gibt
+    const baseRadius = 250;
+    const radius = baseRadius + children.length * 40;
 
   const newNodes = [
     {
@@ -89,15 +90,22 @@ export default function Mindmap() {
       data: { label: focusNode.label },
       position: center,
       style: { fontWeight: 'bold', fontSize: 18 },
+      draggable: false,
     },
-    ...children.map((child, index) => ({
-      id: child.id,
-      data: { label: child.label },
-      position: {
-        x: center.x + radius * Math.cos(index * angleStep),
-        y: center.y + radius * Math.sin(index * angleStep),
-      },
-    })),
+    ...children.map((child, index) => {
+      const angle = (index + 0.5) * angleStep;  
+
+      return {
+        id: child.id,
+        data: { label: child.label },
+        position: {
+          x: center.x + radius * Math.cos(angle),
+          y: center.y + radius * Math.sin(angle),
+
+        },
+        draggable: false,
+      };
+    }),
   ];
 
     const newEdges = children.map((child) => ({
@@ -109,9 +117,12 @@ export default function Mindmap() {
     setNodes((prevNodes) =>
       newNodes.map((newNode) => {
         const existing = prevNodes.find((n) => n.id === newNode.id);
+        const skipAnimation = newNode.id === focusId; // oder weitere Bedingungen
         return {
           ...newNode,
-          position: animatePosition(existing?.position, newNode.position),
+          position: skipAnimation
+            ? newNode.position
+            : animatePosition(existing?.position, newNode.position),
         };
       })
     );
@@ -158,6 +169,7 @@ export default function Mindmap() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onNodeClick={onNodeClick}
+        nodesDraggable={false}
         fitView
       >
         <Controls />
