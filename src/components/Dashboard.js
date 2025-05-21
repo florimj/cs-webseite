@@ -4,7 +4,7 @@ function Dashboard({ onNavigate }) {
   return (
     <main className="main-content">
       <section>
-        <h2>The three dimensions of the governance model</h2>
+        <h2>The Three Dimensions of the Governance Model</h2>
 
         <div className="governance-box">
           <h3>1. Structures</h3>

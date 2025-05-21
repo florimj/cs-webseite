@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Footer() {
+function Footer({ onNavigate }) {
   return (
     <footer className="main-footer">
       <div className="footer-content">
@@ -13,7 +13,7 @@ function Footer() {
           <p>© 2025 HHZ Böblingen | All Rights Reserved</p>
           <p>
             You need to know more?{' '}
-            <span className="contact-link">LET’S talk now!</span>
+            <span className="contact-link" onClick={() => onNavigate('contact')}>LET’S talk now!</span>
           </p>
         </div>
       </div>

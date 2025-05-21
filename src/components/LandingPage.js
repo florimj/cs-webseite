@@ -7,9 +7,9 @@ function LandingPage({ onNavigate }) {
         <section>
           <h2>Welcome!</h2>
           <p>
-            Explore our interactive model for the governance of corporate start-ups.
+            Explore our interactive model for the governance of corporate start-ups
             <hr></hr>
-            Learn more about mechanisms, structures and decision-making processes.
+            Learn more about mechanisms, structures and decision-making processes
           </p>
           <button className="start-button" onClick={() => onNavigate('dashboard')}>
             Start Now!
