@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -57,18 +57,32 @@ const rawData = {
 
 const center = { x: 300, y: 200 };
 
+
+const mainDimensionIds = ['2', '3', '4', '5']; // IDs der Hauptknoten
+const dummyAssignment = {
+  '6': 'inside-out',
+  '7': 'inside-out',
+  '8': 'outside-in',
+  '9': 'outside-in',
+  '10': 'inside-out',
+  '11': 'outside-in',
+  '12': 'inside-out',
+  '13': 'outside-in',
+  '14': 'inside-out',
+  '15': 'outside-in',
+  '16': 'inside-out',
+  '17': 'outside-in',
+  '18': 'inside-out',
+  '19': 'outside-in',
+};
+
 export default function Mindmap() {
   const [focusId, setFocusId] = useState('1');
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [popupContent, setPopupContent] = useState(null);
-
-  const animatePosition = (oldPos, newPos) => {
-    return {
-      x: oldPos?.x ?? newPos.x,
-      y: oldPos?.y ?? newPos.y,
-    };
-  };
+  const [activeFilter, setActiveFilter] = useState(null); // 'inside-out' | 'outside-in'
+  const layoutRef = useRef(() => {});
 
   const layout = useCallback(() => {
     const focusNode = rawData.nodes.find((n) => n.id === focusId);
@@ -94,6 +108,9 @@ export default function Mindmap() {
     },
     ...children.map((child, index) => {
       const angle = (index + 0.5) * angleStep;  
+      
+      const isMainDimension = mainDimensionIds.includes(child.id);
+      const isHighlighted = !activeFilter || isMainDimension || dummyAssignment[child.id] === activeFilter;
 
       return {
         id: child.id,
@@ -104,6 +121,17 @@ export default function Mindmap() {
 
         },
         draggable: false,
+        connectable: false,
+        style: {
+          opacity: isHighlighted ? 1 : 0.2,
+          pointerEvents: isHighlighted ? 'auto' : 'none',
+          backgroundColor: '#fff',
+          border: '1px solid #ccc',
+          borderRadius: '8px',
+          padding: '10px',
+          fontWeight: 'bold',
+          fontSize: 14,
+        },
       };
     }),
   ];
@@ -114,28 +142,19 @@ export default function Mindmap() {
       target: child.id,
     }));
 
-    setNodes((prevNodes) =>
-      newNodes.map((newNode) => {
-        const existing = prevNodes.find((n) => n.id === newNode.id);
-        const skipAnimation = newNode.id === focusId; // oder weitere Bedingungen
-        return {
-          ...newNode,
-          position: skipAnimation
-            ? newNode.position
-            : animatePosition(existing?.position, newNode.position),
-        };
-      })
-    );
+    setNodes(newNodes);
     setEdges(newEdges);
-  }, [focusId]);
+  }, [focusId, setNodes, setEdges, activeFilter]);
+
+  layoutRef.current = layout;
 
   useEffect(() => {
     layout();
-  }, [focusId, layout]);
+  }, [focusId, layout, activeFilter]);
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
-    []
+    [setEdges]
   );
 
   const onNodeClick = (event, node) => {
@@ -161,42 +180,110 @@ export default function Mindmap() {
   };
 
   return (
-    <div style={{ height: '80vh', width: '100%', position: 'relative' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onNodeClick={onNodeClick}
-        nodesDraggable={false}
-        fitView
-      >
-        <Controls />
-        <Background />
-      </ReactFlow>
-
-      {popupContent && (
+      <div style={{ height: '80vh', width: '100%', position: 'relative' }}>
         <div
           style={{
             position: 'absolute',
-            top: '20%',
-            left: '20%',
-            width: '60%',
-            background: 'white',
-            padding: '20px',
-            boxShadow: '0px 4px 12px rgba(0,0,0,0.2)',
-            borderRadius: '8px',
+            right: '20px',
+            top: '100px',
+            backgroundColor: '#ffffffcc',
+            padding: '12px',
+            borderRadius: '10px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
             zIndex: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
           }}
         >
-          <h2>{popupContent.title}</h2>
-          <p>{popupContent.text}</p>
-          <button onClick={closePopup} style={{ marginTop: '1rem' }}>
-            Schließen
+          <h4 style={{ margin: 0, marginBottom: '10px', fontSize: '14px', color: '#333' }}>Filter Mechanisms</h4>
+
+          <button
+            onClick={() => {
+              setActiveFilter('inside-out');
+              layoutRef.current(); // ✅ sofort anwenden
+            }}
+            style={{
+              padding: '6px 10px',
+              borderRadius: '6px',
+              border: 'none',
+              backgroundColor: '#ffa726',
+              color: '#333',
+              cursor: 'pointer',
+            }}
+          >
+            Inside-out
           </button>
+
+          <button
+            onClick={() => {
+              setActiveFilter('outside-in');
+              layoutRef.current();
+            }}
+            style={{
+              padding: '6px 10px',
+              borderRadius: '6px',
+              border: 'none',
+              backgroundColor: '#ffa726',
+              color: '#333',
+              cursor: 'pointer',
+            }}
+          >
+            Outside-in
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveFilter(null);
+              layoutRef.current();
+            }}
+            style={{
+              padding: '6px 10px',
+              borderRadius: '6px',
+              border: 'none',
+              backgroundColor: '#ffa726',
+              color: '#333',
+              cursor: 'pointer',
+            }}
+          >Reset</button>
         </div>
-      )}
-    </div>
+
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onNodeClick={onNodeClick}
+          nodesDraggable={false}
+          connectable={false}
+          fitView
+        >
+          <Controls />
+          <Background />
+        </ReactFlow>
+
+        {popupContent && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '20%',
+              left: '20%',
+              width: '60%',
+              background: 'white',
+              padding: '20px',
+              boxShadow: '0px 4px 12px rgba(0,0,0,0.2)',
+              borderRadius: '8px',
+              zIndex: 10,
+            }}
+          >
+            <h2>{popupContent.title}</h2>
+            <p>{popupContent.text}</p>
+            <button onClick={closePopup} style={{ marginTop: '1rem' }}>
+              Schließen
+            </button>
+          </div>
+        )}
+      </div>
   );
 }
