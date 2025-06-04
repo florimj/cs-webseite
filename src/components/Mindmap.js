@@ -73,9 +73,13 @@ export default function Mindmap() {
         const radius = baseRadius + level * 180;
         const angleStep = (angleEnd - angleStart) / Math.max(children.length, 1);
 
+        const nodeData = rawData.nodes.find(n => n.id === nodeId);
+        const isMain = mainDimensionIds.includes(nodeId);
+        const isHighlighted = !activeFilter || isMain || dummyAssignment[nodeId] === activeFilter;
+
         allNodes.set(nodeId, {
           id: nodeId,
-          data: { label: rawData.nodes.find(n => n.id === nodeId)?.label || nodeId },
+          data: { label: nodeData?.label || nodeId },
           position: level === 0
             ? center
             : {
@@ -85,7 +89,8 @@ export default function Mindmap() {
           draggable: false,
           connectable: false,
           style: {
-            opacity: 1,
+            opacity: isHighlighted ? 1 : 0.2,
+            pointerEvents: isHighlighted ? 'auto' : 'none',
             backgroundColor: '#fff',
             border: '1px solid #ccc',
             borderRadius: '8px',
@@ -168,7 +173,7 @@ export default function Mindmap() {
 
     setNodes(newNodes);
     setEdges(newEdges);
-  }, [focusId, activeFilter]);
+  }, [focusId, activeFilter, setNodes, setEdges]);
 
   layoutRef.current = layout;
 
