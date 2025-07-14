@@ -8,7 +8,7 @@ function Contact() {
         If you have questions about the project or would like to give feedback, feel free to contact us:
       </p>
 
-      <a href="mailto:mail@reutlingen-university.de">
+      <a href="mailto:Konstantin.Garidis@Reutlingen-University.DE">
         <button className="start-button">Send us an Email</button>
       </a>
 
