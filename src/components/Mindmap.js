@@ -258,6 +258,7 @@ export default function Mindmap() {
   const [popupContent, setPopupContent] = useState(null);
   //const [activeFilter, setActiveFilter] = useState(null); wegen Filter
   const [expandedMechanisms, setExpandedMechanisms] = useState([]);
+  const [showHelp, setShowHelp] = useState(false);
   const layoutRef = useRef(() => {});
 
   const renderPossibilities = useCallback((allNodes, edgesList) => {
@@ -418,6 +419,37 @@ export default function Mindmap() {
 
   return (
     <div style={{ height: '80vh', width: '100%', position: 'relative' }}>
+            <div style={{ position: 'absolute', top: 65, right: 20, zIndex: 10 }}>
+        <button
+          onClick={() => setShowHelp(true)}
+          style={{ padding: '6px 12px', backgroundColor: '#899b19ff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}
+        >
+          HELP & ORIENTATION
+        </button>
+      </div>
+
+  {showHelp && (
+    <div className="mindmap-popup">
+      <h2>Help & Orientation</h2>
+      <p>
+        This interactive mind map illustrates a governance model for corporate start-ups. At its core, it contains three key dimensions:
+        <br /><br />
+        <strong>1. Structures:</strong> Focuses on formal aspects such as legal setup, branding, physical location, and internal anchoring.<br />
+        <strong>2. Processes & Operations:</strong> Covers access to services, decision-making, resource flows, and support programs.<br />
+        <strong>3. Relational Mechanisms:</strong> Includes collaboration, communication, cultural alignment, roles, and trust-building.
+        <br /><br />
+        Each dimension consists of several <strong>mechanisms</strong>. Click on any node to view detailed information about that element. 
+        <br /><br />
+        Mechanisms also offer <strong>practical implementation options</strong> (e.g., “Minority Stake”, “Spin-Off”, “Accelerator Program”). Click "Show Possibilities" in the popup to reveal them each comes with a short explanation of its strategic value.
+        <br /><br />
+        Use the <strong>dropdown menu</strong> (top-right) to focus on one of the three main dimensions, or choose “Show Entire Mindmap” to explore everything at once.
+        <br /><br />
+        Click around freely to explore. You can reopen this help guide at any time using the yellow "Help" button.
+      </p>
+      <button onClick={() => setShowHelp(false)}>Close Help</button>
+    </div>
+  )}
+
       <div className="mindmap-controls">
         {/*
         <h4>Filter Mechanisms:</h4>
@@ -481,6 +513,7 @@ export default function Mindmap() {
       </div>
     </div>
   )}
+
     </div>
   );
 }

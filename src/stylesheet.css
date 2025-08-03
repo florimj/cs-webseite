@@ -231,10 +231,10 @@ button:hover {
 }
 
 .model-category-intro {
+  text-align: left;
   max-width: 1400px;
   width: 90%;
   margin: 0 auto 2rem auto;
-  text-align: center;
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -314,4 +314,25 @@ main section + section {
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.mindmap-help-button {
+  position: absolute;
+  bottom: 11.3rem;
+  right: 2.8rem;
+  background-color: #facc15;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+.mindmap-help-button:hover {
+  transform: scale(1.05);
 }
