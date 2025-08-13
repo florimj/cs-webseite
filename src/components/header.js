@@ -10,7 +10,7 @@ function Header({ onNavigate }) {
         <button onClick={() => onNavigate('models')}><FaRegFileAlt  /> Startup Models</button>
         <button onClick={() => onNavigate('dashboard')}><FaSitemap /> Dashboard</button>
         <button onClick={() => onNavigate('mindmap')}><FaProjectDiagram/> Mindmap </button>
-        <button onClick={() => onNavigate('baum')}><FaTree /> Strategy Decision Tree</button>
+        <button onClick={() => onNavigate('tree')}><FaTree /> Strategy Decision Tree</button>
         <button onClick={() => onNavigate('about')}><FaInfoCircle /> About Us</button>
         <button onClick={() => onNavigate('contact')}><FaEnvelope /> Contact</button>
       </nav>

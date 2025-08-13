@@ -7,6 +7,7 @@ import Models from './components/Models';
 import Mindmap from './components/Mindmap';
 import AboutUs from './components/AboutUs';
 import Contact from './components/Contact';
+import StrategyDecisionTree from './components/DecisionTree';
 
 function App() {
   const [view, setView] = useState('landing');
@@ -21,6 +22,7 @@ function App() {
       {view === 'models' && <Models onNavigate={setView} />}
       {view === 'mindmap' && <Mindmap onNavigate={setView} />}
       {view === 'about' && <AboutUs onNavigate={setView} />}
+      {view === 'tree' && <StrategyDecisionTree onNavigate={setView} />}
       {view === 'contact' && <Contact onNavigate={setView} />}
       {/* weitere Komponenten */}
     </main>

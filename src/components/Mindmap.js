@@ -458,9 +458,9 @@ export default function Mindmap() {
         <button onClick={() => { setActiveFilter(null); layoutRef.current(); }}>Reset</button>
         wegen Filter*/}
         <div>
-          <h4>Ebene wählen:</h4>
+          <h4>Choose level:</h4>
           <select value={focusId} onChange={(e) => setFocusId(e.target.value)}>
-            <option value="all">🌐 Gesamte Mindmap anzeigen</option>
+            <option value="all">🌐 Show entire mindmap</option>
             <option value="2">📁 Processes & Operations</option>
             <option value="3">📁 Structures</option>
             <option value="4">📁 Relational Mechanisms</option>
